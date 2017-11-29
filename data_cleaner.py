@@ -300,9 +300,8 @@ with open(input_data_path(COLLISIONS), newline='', mode='r') as in_file, \
     reader = csv.DictReader(in_file)
     pprint.pprint(reader.fieldnames)
     writer = csv.DictWriter(out_file,
-                            fieldnames=['OnStreet', 'CrossStreet', 'Longitude', 'Latitude', 'PedestrianInjured',
-                                        'PedestrianKilled', 'CyclistInjured', 'CyclistKilled', 'MotoristInjured',
-                                        'MotoristKilled'])
+                            fieldnames=['OnStreet', 'CrossStreet', 'PedestrianInjured', 'PedestrianKilled',
+                                        'CyclistInjured', 'CyclistKilled', 'MotoristInjured', 'MotoristKilled'])
     writer.writeheader()
     for record in reader:
         try:

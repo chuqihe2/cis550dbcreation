@@ -47,6 +47,7 @@ def insert_as_records(file_name, table_name, schema, keys):
     cursor.execute("TRUNCATE TABLE {0};".format(table_name))
 
     inserted = 0
+    dropped = 0
     with open(cleaned_data_path(file_name), newline='', mode='r') as in_file:
         reader = csv.DictReader(in_file)
         for record in reader:
@@ -60,17 +61,21 @@ def insert_as_records(file_name, table_name, schema, keys):
                 cursor.execute(query_template,
                                {field: format_value(record.get(field), schema[field]) for field in record})
             except mysql.connector.Error as err:
-                raise Exception(
+                print(
                     'Exception when inserting {0}-th record:\n{1}Warning:{2}'.format(inserted + 1, record, err))
+                dropped += 1
             except mysql.connector.Warning as warning:
                 print('Warning when inserting {0}-th record:\n{1}Warning:{2}'.format(inserted + 1, record, warning))
-            finally:
+                inserted += 1
+            else:
                 inserted += 1
 
     cnx.commit()
 
-    print("Done inserting {0} records into {1} in {2} second(s)!".format(inserted, file_name,
-                                                                         time.process_time() - start_time))
+    print("Done inserting {0} records into {1} in {2} second(s)! {3} were dropped!"
+          .format(inserted, file_name,
+                  time.process_time() - start_time,
+                  dropped))
 
 
 insert_as_records(FOOD, 'Food', {
