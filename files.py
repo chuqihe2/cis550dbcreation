@@ -2,6 +2,19 @@
 File paths and their utilities.
 """
 
+
+def input_data_path(filename):
+    return '{0}/{1}.csv'.format(DATA_DIR, filename)
+
+
+def cleaned_data_path(filename):
+    return '{0}/{1}.csv'.format(CLEANED_DIR, filename)
+
+
+def sql_path(filename):
+    return '{0}/{1}.sql'.format(SQL_DIR, filename)
+
+
 DATA_DIR = 'data'
 CLEANED_DIR = 'cleaned'
 SQL_DIR = 'sql'
@@ -20,14 +33,5 @@ HOTELS = 'Times_Square_Hotels'
 # Uses (Building Address)
 SIGNAGE = 'Times_Square_Signage'
 
-
-def input_data_path(filename):
-    return '{0}/{1}.csv'.format(DATA_DIR, filename)
-
-
-def cleaned_data_path(filename):
-    return '{0}/{1}.csv'.format(CLEANED_DIR, filename)
-
-
-def sql_path(filename):
-    return '{0}/{1}.sql'.format(SQL_DIR, filename)
+# Table creation script
+TABLE_CREATION = sql_path('table_creation')

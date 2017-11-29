@@ -23,13 +23,20 @@ def clean_str(s):
 # ================ STREET ADDRESS PARSER ==================
 # =========================================================
 
+def get_first_numeric_part(str_value):
+    numeric_re = re.compile("(\d+)")
+    numeric_match = numeric_re.match(str_value)
+    if numeric_match:
+        return numeric_match.group(0)
+    return None
+
+
 def standardize_street_name(street_name):
     # Match the Arabic-numerical representations
     street_name = street_name.lower()
-    numeric_street_re = re.compile("(\d+)")
-    numeric_match = numeric_street_re.match(street_name)
-    if numeric_match:
-        return numeric_match.group(0)
+    numeric_street_name = get_first_numeric_part(street_name)
+    if numeric_street_name is not None:
+        return numeric_street_name
     # Match the English representations
     if 'first' in street_name or 'one' in street_name:
         return '1'
@@ -93,11 +100,19 @@ def parse_street_address(st_addr):
                                                     standardize_street_post_type(token_dict['StreetNamePostType']))
     else:
         token_dict['StreetName'] = std_st_name
+
+    # Standardize building numbers
+    building_number = get_first_numeric_part(token_dict['AddressNumber'])
+    if building_number is None:
+        token_dict['AddressNumber'] = '0'
+    else:
+        token_dict['AddressNumber'] = building_number
+
     return token_dict
 
 
 # =========================================================
-# ======================= HOTELS ==========================
+# ======================== FOOD ===========================
 # =========================================================
 
 dropped_examples = 0
@@ -109,7 +124,7 @@ with open(input_data_path(FOOD), newline='', mode='r') as in_file, \
     pprint.pprint(reader.fieldnames)
     writer = csv.DictWriter(out_file,
                             fieldnames=['StreetName', 'Building', 'Name', 'ZipCode', 'Longitude', 'Latitude',
-                                        'PhoneNumber', 'Cuisine'])
+                                        'PhoneNumber', 'WebSite', 'Cuisine'])
     writer.writeheader()
     for record in reader:
         try:
@@ -122,6 +137,7 @@ with open(input_data_path(FOOD), newline='', mode='r') as in_file, \
                 'Longitude': clean_str(record['Longitude']),
                 'Latitude': clean_str(record['Latitude']),
                 'PhoneNumber': clean_str(record['Phone']),
+                'WebSite': clean_str(record['Website']),
                 'Cuisine': clean_str(
                     record['Sub Subindustry'] if 'Sub Subindustry' in record else record['Subindustry']),
             })

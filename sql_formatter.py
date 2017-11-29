@@ -1,3 +1,7 @@
+"""
+DEPRECATED: This is for the old Oracle DB instance, which is replaced by a MySQL DB instance.
+Use sql_executor instead.
+"""
 import csv
 import time
 from collections import OrderedDict
