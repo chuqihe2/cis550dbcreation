@@ -61,13 +61,13 @@ def standardize_street_name(street_name):
 def standardize_street_post_type(st_post_type):
     st_post_type = st_post_type.lower()
     # Use abbreviations
-    if st_post_type == 'street':
+    if st_post_type == 'street' or st_post_type == 'str' or st_post_type == 'st.' or st_post_type == 'str.':
         st_post_type = 'st'
-    elif st_post_type == 'avenue':
+    elif st_post_type == 'avenue' or st_post_type == 'ave.':
         st_post_type = 'ave'
-    elif st_post_type == 'square':
+    elif st_post_type == 'square' or st_post_type == 'sq.':
         st_post_type = 'sq'
-    elif st_post_type == 'court':
+    elif st_post_type == 'court' or st_post_type == 'ct.':
         st_post_type = 'ct'
     return clean_str(st_post_type)
 
