@@ -33,5 +33,8 @@ HOTELS = 'Times_Square_Hotels'
 # Uses (Building Address)
 SIGNAGE = 'Times_Square_Signage'
 
+# NYC Subway data (all entrances)
+SUBWAY = 'DOITT_SUBWAY_ENTRANCE_01_13SEPT2010'
+
 # Table creation script
 TABLE_CREATION = sql_path('table_creation')
