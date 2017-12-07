@@ -33,13 +33,13 @@ with open(cleaned_data_path(SUBWAY), newline='', mode='r') as in_file, \
                 lines.add(line)
                 execute_and_write_out(
                     'CREATE (l:Line {{ name: \'{0}\'}});\n'.format(line))
-                execute_and_write_out(
-                    'MATCH (s:Station),(l:Line)\n'
-                    'WHERE s.name = \'{station_name}\' AND l.name = \'{line_name}\'\n'
-                    'CREATE (l)-[r:GOTO]->(s);\n'.format_map(
-                        {
-                            'station_name': record['Station'],
-                            'line_name': line
-                        }))
+            execute_and_write_out(
+                'MATCH (s:Station),(l:Line)\n'
+                'WHERE s.name = \'{station_name}\' AND l.name = \'{line_name}\'\n'
+                'CREATE (l)-[r:GOTO]->(s);\n'.format_map(
+                    {
+                        'station_name': record['Station'],
+                        'line_name': line
+                    }))
 
 session.close()
