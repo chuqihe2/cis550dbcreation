@@ -62,6 +62,7 @@ with open(input_data_path(SUBWAY), newline='', mode='r') as in_file, \
             'Line': lines})
 
     # Write a record with the union of all lines, and the average of all geo coordinates.
+    # This is only a backup. Queries are sent to the server directly.
     writer = csv.DictWriter(out_file,
                             fieldnames=['Station', 'Longitude', 'Latitude', 'Line'])
     writer.writeheader()
