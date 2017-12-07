@@ -51,6 +51,9 @@ with open(input_data_path(SUBWAY), newline='', mode='r') as in_file, \
     name_to_records = dict()
     for record in reader:
         name = get_station_name(record['NAME'])
+        if len(name) == 0:
+            # Skip invalid names
+            continue
         lon, lat = get_lon_and_lat(record['the_geom'])
         lines = get_lines(record['LINE'])
         if name not in name_to_records:

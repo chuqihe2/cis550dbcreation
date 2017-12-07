@@ -38,7 +38,7 @@ with open(cleaned_data_path(SUBWAY), newline='', mode='r') as in_file, \
                 'WHERE s.name = \'{station_name}\' AND l.name = \'{line_name}\'\n'
                 'CREATE (l)-[r:GOTO]->(s);\n'.format_map(
                     {
-                        'station_name': record['Station'],
+                        'station_name': record['Station'].replace("'", "\\'"),
                         'line_name': line
                     }))
 
